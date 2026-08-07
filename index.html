@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unit Converter</title>
+  <style>
+    hr.solid {
+      border-top: 3px solid #bbb;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Unit Converter</h1>
+<hr class="solid">
+<div class="tabs">
+<button class="tab" onclick="openCategory(event, 'Length')">Length</button>
+<button class="tab" onclick="openCategory(event, 'Weight')">Weight</button>
+<button class="tab" onclick="openCategory(event, 'Temperature')">Temperature</button>
+</div>
+
+<div class="convertPage">
+  <h2>Enter the value to convert: </h2>
+  <input type="text" id="inputValue" placeholder="Enter value">
+  <br><br>
+
+  <label for="fromUnit">Unit to convert from: </label>
+  <select class="fromUnit">
+    <option value="m">Meters</option>
+    <option value="cm">Centimeters</option>
+    <option value="mm">Millimeters</option>
+    <option value="km">Kilometers</option>
+  </select>
+<br><br>
+
+  <label for="toUnit">Unit to convert to: </label>
+  <select class="toUnit">
+    <option value="m">Meters</option>
+    <option value="cm">Centimeters</option>
+    <option value="mm">Millimeters</option>
+    <option value="km">Kilometers</option>
+  </select>
+  <br><br>
+
+  <button class="convertBtn" onclick="showResult(event)">Convert</button>
+</div>
+
+<div class="resultPage">
+  <h2>Result of your calculation</h2>
+  <h1 id="result">Result will appear here </h1>
+  <button id="reset">Reset</button>
+</div>
+
+<script>
+//we need to change the units and some names when pressing the buttons. 
+function openCategory(evt, categoryName) {
+  var i, tabcontent, tablinks;
+  //make everything not active
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  //make the needed city active 
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function showResult(evt){
+  //once the button is clicked, show the hidden div with the result
+}
+</script>
+</body>
+</html>
