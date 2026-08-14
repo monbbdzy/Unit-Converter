@@ -14,32 +14,23 @@
 <h1>Unit Converter</h1>
 <hr class="solid">
 <div class="tabs">
-<button class="tab" onclick="openCategory(event, 'Length')">Length</button>
-<button class="tab" onclick="openCategory(event, 'Weight')">Weight</button>
-<button class="tab" onclick="openCategory(event, 'Temperature')">Temperature</button>
+<button class="tab" onclick="openCategory(event, 'length')">Length</button>
+<button class="tab" onclick="openCategory(event, 'weight')">Weight</button>
+<button class="tab" onclick="openCategory(event, 'temperature')">Temperature</button>
 </div>
 
 <div class="convertPage">
-  <h2>Enter the value to convert: </h2>
+  <!-- There will be a text: Enter the length to convert  -->
+  <h2 id = "categoryName"></h2>  
   <input type="text" id="inputValue" placeholder="Enter value">
   <br><br>
 
   <label for="fromUnit">Unit to convert from: </label>
-  <select class="fromUnit">
-    <option value="m">Meters</option>
-    <option value="cm">Centimeters</option>
-    <option value="mm">Millimeters</option>
-    <option value="km">Kilometers</option>
-  </select>
+  <select  class="units"></select>
 <br><br>
 
-  <label for="toUnit">Unit to convert to: </label>
-  <select class="toUnit">
-    <option value="m">Meters</option>
-    <option value="cm">Centimeters</option>
-    <option value="mm">Millimeters</option>
-    <option value="km">Kilometers</option>
-  </select>
+  <label id="toUnit">Unit to convert to: </label>
+  <select class ='units'></select>
   <br><br>
 
   <button class="convertBtn" onclick="showResult(event)">Convert</button>
@@ -48,30 +39,50 @@
 <div class="resultPage">
   <h2>Result of your calculation</h2>
   <h1 id="result">Result will appear here </h1>
-  <button id="reset">Reset</button>
+  <button id="reset" onclick ="resetPage(event)">Reset</button>
 </div>
 
 <script>
-//we need to change the units and some names when pressing the buttons. 
-function openCategory(evt, categoryName) {
-  var i, tabcontent, tablinks;
-  //make everything not active
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+//Define the category objects
+let length, weight, temperature; 
 
-  //make the needed city active 
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
+//Categories data 
+const categories = {
+  length: [['Milimeters', 'mm'],['Centimeters', 'cm'], ['Meters', 'm'], ['Kilometers', 'km']],
+  weight: [['Milligrams', 'mg'], ['Grams', 'g'], ['Kilograms', 'kg'], ['Tonnes', 't']],
+  temperature : [['degree Celsius', 'C'], ['degree Fahrenheit', 'F'], ['Kelvin', 'K']]
+};
+
+
+function openCategory(evt, categoryName) {
+  // when pressed a proper category window will be shown 
+  let status = categoryName; 
+  //Adapt the header accordingly 
+  let headerText = document.getElementById('categoryName');
+  headerText.textContent = `Enter the ${status} to convert`; 
+
+  //Append according options
+  let selectElement = document.querySelectorAll('.units');
+
+  selectElement.forEach(element => {
+    // Clean up the previous options if there are any 
+    if (element.options.length != 0) {
+      element.options.length = 0;
+    }  
+    categories[status].forEach(category => { //will this work? since status = 'length'
+    // create new Option(text, value)
+    const option = new Option(category[0], category[1]);
+    element.appendChild(option);
+    });
+  });
 }
 
 function showResult(evt){
   //once the button is clicked, show the hidden div with the result
+}
+
+function resetPage(evt){
+  // when pressed, the page will be reset 
 }
 </script>
 </body>
